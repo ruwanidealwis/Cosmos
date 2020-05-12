@@ -1,0 +1,3 @@
+// make API calls to NASA API...
+const config = require("../config.js");
+let api_key = config.apiKey;

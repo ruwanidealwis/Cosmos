@@ -1,0 +1,22 @@
+{
+  "name": "whatwerethecosmosdoing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruwanidealwis/whatwerethecosmosdoing.git"
+  },
+  "author": "Ruwani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ruwanidealwis/whatwerethecosmosdoing/issues"
+  },
+  "homepage": "https://github.com/ruwanidealwis/whatwerethecosmosdoing#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
