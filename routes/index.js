@@ -34,6 +34,7 @@ module.exports = app => {
     req.session.moonInfo = moonController.moon(dateToAdd); //get information about the moon
     console.log(req.session.moonInfo);
     let spaceObj = {};
+
     NasaController.apod(dateArray[1], dateArray[2])
       .then(picture => {
         spaceObj.picture = picture;

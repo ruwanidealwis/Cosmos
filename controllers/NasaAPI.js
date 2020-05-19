@@ -87,7 +87,7 @@ const asteroidInfo = async function(date) {
 
       let asteroidArray = [];
       console.log(asteroidArray);
-      for (k = 0; k < 3; k++) {
+      for (let k = 0; k < 3; k++) {
         console.log(k);
         console.log(date);
         //console.log(response.data.near_earth_objects);
@@ -95,15 +95,19 @@ const asteroidInfo = async function(date) {
 
         console.log(asteroid);
         let name = asteroid.name;
-
+        let closestTime =
+          asteroid.close_approach_data[0].close_approach_date_full;
+        let missDistanceKM = asteroid.close_approach_data[0].miss_distance;
+        console.log(asteroid.close_approach_data[0].miss_distance.kilometers);
         let luminosity = asteroid.absolute_magnitude_h;
         let maxDiameter =
           asteroid.estimated_diameter.meters.estimated_diameter_max;
-        let closestTime = asteroid.close_approach_data.close_approach_date_full; //need to get the time out of it later
+        //let closestTime = asteroid.close_approach_data.close_approach_date_full; //need to get the time out of it later
+
         let velocityKM =
-          asteroid.close_approach_data.relative_velocity.kilometers_per_second;
-        let missDistanceKM =
-          asteroid.close_approach_data.miss_distance.kilometers;
+          asteroid.close_approach_data[0].relative_velocity
+            .kilometers_per_second;
+
         let obj = {
           name: name,
           luminosity: luminosity,
@@ -114,20 +118,14 @@ const asteroidInfo = async function(date) {
         };
         console.log("jsaiodjasiodjasoidjaiosdjio");
         //console.log(obj);
-        asteroidArray[0] = {
-          name: name,
-          luminosity: luminosity,
-          maxDiameter: maxDiameter,
-          closestTime: closestTime,
-          velocityKM: velocityKM,
-          missDistanceKM: missDistanceKM
-        };
+        asteroidArray[k] = obj;
         // console.log(asteroidArray[0]);
       }
       //console.log(asteroidArray);
 
       let count = response.data.element_count;
-      let hazardCount = response.data.near_earth_objects.date.filter(
+      console.log(count);
+      let hazardCount = response.data.near_earth_objects[date].filter(
         asteroid => {
           asteroid.is_potentially_hazardous_asteroid == true;
         }
