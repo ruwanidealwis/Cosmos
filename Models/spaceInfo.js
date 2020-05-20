@@ -5,23 +5,14 @@ const Schema = mongoose.Schema;
 //save data that is not unique to each user, so that multiple api calls do not need to be made..
 //because darkest time of night, stars, moon-rise is all relative to location ==> request must be sent each time...
 const SpaceInformationSchema = new Schema({
-  date: String, //form YYYY-MM-DD
+  date: Date, //form YYYY-MM-DD
   //unique to year
   moon: {
     phase: Number,
     illuminationFraction: Number
   },
   //not unique to year (data limited)
-  Mars: {
-    //will have to scale to a day past 2012 because that is the earliest possible data
-    images: [
-      {
-        url: String
-      }
-    ],
-    weather: Number, //unsure if it works
-    sunset: Number //unsure if it works
-  },
+
   //unique to year
   apod: {
     url: String, // astronomy picture of the day
@@ -43,28 +34,32 @@ const SpaceInformationSchema = new Schema({
       }
     ]
   },
+  marsRover: [
+    {
+      url: String
+    }
+  ],
   //not unique to year because events are rare!
   //these fields are unique to each users, in some cases interplanetery shocks never occured
-  interplanetaryShock: {
-    location: String,
-    time: String
-  },
-  SolarFlare: {
+
+  solarFlare: {
     peakTime: String,
     class: String,
     location: String
   },
-
-  GeomagenticStorm: {
-    startTime: String,
-    KpIndex: Number
-  },
-
-  CoronalMassEjection: {
+  coronalMassEjection: {
     longitude: Number,
     latitidue: Number,
     speed: Number,
     Type: String //common, occasional,rare,extremely rare
+  },
+  interplanetaryShock: {
+    location: String,
+    time: String
+  },
+  geomagneticStorm: {
+    startTime: Date,
+    KPIndex: Number
   }
 });
 

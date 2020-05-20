@@ -25,7 +25,7 @@ function randomInteger(min, max) {
 //getting the astronomy picture of the day
 
 const apod = async function(month, day) {
-  let year = randomInteger(2013, lastCompletedYear); //image quality much better
+  let year = randomInteger(2012, lastCompletedYear); //image quality much better
   //console.log(year);
   return axios
     .get(`https://api.nasa.gov/planetary/apod?`, {
@@ -49,7 +49,7 @@ const apod = async function(month, day) {
 //get Mars Rover for specific date
 const roverImages = async function(month, day) {
   //get years between 2015 and 2020
-  let year = randomInteger(2015, lastCompletedYear); //get a random year
+  //let year = randomInteger(2015, lastCompletedYear); //get a random year
   let returnVal = await axios
     .get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?`, {
       params: {
@@ -83,22 +83,23 @@ const asteroidInfo = async function(date) {
       }
     })
     .then(response => {
-      console.log("here!");
+      //console.log("here!");
 
       let asteroidArray = [];
-      console.log(asteroidArray);
+      //console.log(asteroidArray);
       for (let k = 0; k < 3; k++) {
-        console.log(k);
-        console.log(date);
+        //console.log(k);
+        //console.log(date);
         //console.log(response.data.near_earth_objects);
         let asteroid = response.data.near_earth_objects[date][k];
 
-        console.log(asteroid);
+        // console.log(asteroid);
         let name = asteroid.name;
         let closestTime =
           asteroid.close_approach_data[0].close_approach_date_full;
-        let missDistanceKM = asteroid.close_approach_data[0].miss_distance;
-        console.log(asteroid.close_approach_data[0].miss_distance.kilometers);
+        let missDistanceKM =
+          asteroid.close_approach_data[0].miss_distance.kilometers;
+        // console.log(asteroid.close_approach_data[0].miss_distance.kilometers);
         let luminosity = asteroid.absolute_magnitude_h;
         let maxDiameter =
           asteroid.estimated_diameter.meters.estimated_diameter_max;
@@ -116,7 +117,7 @@ const asteroidInfo = async function(date) {
           velocityKM: velocityKM,
           missDistanceKM: missDistanceKM
         };
-        console.log("jsaiodjasiodjasoidjaiosdjio");
+        //console.log("jsaiodjasiodjasoidjaiosdjio");
         //console.log(obj);
         asteroidArray[k] = obj;
         // console.log(asteroidArray[0]);
@@ -124,7 +125,7 @@ const asteroidInfo = async function(date) {
       //console.log(asteroidArray);
 
       let count = response.data.element_count;
-      console.log(count);
+      // console.log(count);
       let hazardCount = response.data.near_earth_objects[date].filter(
         asteroid => {
           asteroid.is_potentially_hazardous_asteroid == true;
@@ -145,42 +146,53 @@ const asteroidInfo = async function(date) {
   return returnVal;
 };
 
-//date has to be in UTC!
 const interPlanetaryShock = async function(month, day) {
-  //events are very rare so it is easy to query them throught he decade
-
-  axios
-    .get(`https://api.nasa.gov/DONKI/IPS?`, {
-      params: {
-        start_date: "2010-01-01",
-        end_date: `${lastCompletedYear}-12-31`,
-        api_key: api_key
-      }
-    })
-    .then(response => {
-      //query for the date...
-      let event = response.data.filter(event => {
-        let eventDate = new Date(event.startTime);
-        let Eventmonth = eventDate.getMonth();
-        let eventDay = eventDate.getDate();
-        return eventDay == day && Eventmonth == month;
+  let promises = [];
+  let returnVal = {};
+  for (i = 0; i < yearArray.length; i++) {
+    let response = await axios
+      .get(`https://api.nasa.gov/DONKI/IPS?`, {
+        params: {
+          startDate: `${yearArray[i]}-${month}-${day}`,
+          endDate: `${yearArray[i]}-${month}-${day}`,
+          api_key: api_key
+        }
+      })
+      .then(response => {
+        if (response.data != "") {
+          let events = response.data.filter(event => {
+            //console.log(response.data);
+            let eventDate = new Date(event.eventTime);
+            let eventmonth = eventDate.getUTCMonth();
+            let eventDay = eventDate.getUTCDate(); //
+            return eventDay == day && eventmonth + 1 == month;
+          });
+          if (events.length != 0) {
+            let location = events[0].location;
+            let time = events[0].eventTime;
+            let ipsObejct = {
+              location: location,
+              time: time
+            };
+            i = yearArray.length; //short circuit the loop
+            return ipsObejct;
+            //no need to keep making requests
+          } else {
+            console.log("empty");
+            return {};
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
       });
-      if (event != []) {
-        let location = event.location;
-        let time = event.eventTime;
-        let ipsObejct = {
-          location: location,
-          time: time
-        };
-        return ipsObejct;
-      } else {
-        return {}; //re
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+
+    returnVal = response;
+  }
+  return returnVal;
 };
+//date has to be in UTC!
+
 const solarFlare = async function(month, day) {
   let promises = [];
   let returnVal = {};
@@ -198,8 +210,8 @@ const solarFlare = async function(month, day) {
           //console.log("The year" + yearArray[i]);
           let events = response.data.filter(event => {
             let eventDate = new Date(event.beginTime);
-            let eventmonth = eventDate.getMonth();
-            let eventDay = eventDate.getDate();
+            let eventmonth = eventDate.getUTCMonth();
+            let eventDay = eventDate.getUTCDate(); //
 
             return eventDay == day && eventmonth + 1 == month;
           });
@@ -253,8 +265,9 @@ const cme = async function(month, day) {
         if (response.data != "") {
           let events = response.data.filter(event => {
             let eventDate = new Date(event.startTime);
-            let eventmonth = eventDate.getMonth();
-            let eventDay = eventDate.getDate();
+            console.log(eventDate);
+            let eventmonth = eventDate.getUTCMonth();
+            let eventDay = eventDate.getUTCDate(); //
             return eventDay == day && eventmonth + 1 == month;
           });
           if (events != []) {
@@ -290,40 +303,48 @@ const cme = async function(month, day) {
 };
 
 const geomagneticStorm = async function(month, day) {
-  //events are very rare so it is easy to query them throught he decade
-  axios
-    .get(`https://api.nasa.gov/DONKI/GST?`, {
-      params: {
-        start_date: "2010-01-01",
-        end_date: `${lastCompletedYear}-12-31`,
-        api_key: api_key
-      }
-    })
-    .then(response => {
-      //query for the date...
-      let event = response.data.filter(event => {
-        let eventDate = new Date(event.startTime);
-        let Eventmonth = eventDate.getMonth();
-        let eventDay = eventDate.getDate();
-        return eventDay == day && Eventmonth == month;
+  let promises = [];
+  let returnVal = {};
+  for (i = 0; i < yearArray.length; i++) {
+    let response = await axios
+      .get(`https://api.nasa.gov/DONKI/GST?`, {
+        params: {
+          startDate: `${yearArray[i]}-${month}-${day}`,
+          endDate: `${yearArray[i]}-${month}-${day}`,
+          api_key: api_key
+        }
+      })
+      .then(response => {
+        if (response.data != "") {
+          let events = response.data.filter(event => {
+            //console.log(response.data);
+            let eventDate = new Date(event.startTime);
+            let eventmonth = eventDate.getUTCMonth();
+            let eventDay = eventDate.getUTCDate(); //
+            return eventDay == day && eventmonth + 1 == month;
+          });
+          if (events.length != 0) {
+            let startTime = events[0].startTime;
+            let KPIndex = events[0].allKpIndex[0].kpIndex;
+            let gmsObejct = {
+              startTime: startTime,
+              KPIndex: KPIndex
+            };
+            i = yearArray.length; //short circuit the loop
+            return gmsObejct;
+          } else {
+            return {}; //re
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
       });
-      if (event != []) {
-        let startTime = event.startTime;
-        let KPIndex = event.allKpIndex.KPIndex;
-        let gmsObejct = {
-          startTime: startTime,
-          KPIndex: KPIndex
-        };
-        return gmsObejct;
-      } else {
-        return {}; //re
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
 
+    returnVal = response;
+  }
+  return returnVal;
+};
 //https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2014-7-3&camera=mast&api_key=8pclHL9dk6AlfUwXK3RmkeLYaf0QbkjbnfM304ev
 
 //get solar flare for a specific date

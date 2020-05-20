@@ -18,7 +18,7 @@ exports.moon = date => {
   let moon = SunCalc.getMoonIllumination(date);
   let moonInfo = {
     phase: moon.phase,
-    illumination: moon.fraction
+    illuminationFraction: moon.fraction
   };
   return moonInfo;
 };

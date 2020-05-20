@@ -3,7 +3,9 @@
 let moonController = require("../controllers/moonInfo"); //get the spotifyController modules
 let NasaController = require("../controllers/NasaAPI");
 let express = require("express");
-
+let databaseConnect = require("../Models/connect");
+let spaceInfo = require("../Models/spaceInfo.js");
+databaseConnect.connect();
 //handles all the possible routes
 module.exports = app => {
   app.get("/", (req, res) => {
@@ -30,20 +32,27 @@ module.exports = app => {
       parseInt(dateArray[1], 10) - 1,
       parseInt(dateArray[2], 10)
     );
-    //must now call all the methods....
-    req.session.moonInfo = moonController.moon(dateToAdd); //get information about the moon
-    console.log(req.session.moonInfo);
+    let exist = true;
     let spaceObj = {};
+    //must now call all the methods....but check if database already has queried for this data to avoid unessecary calls
+    spaceInfo.find({ date: dateToAdd }, (err, docs) => {
+      if (err) {
+        console.log(err);
+      } else if (docs.length == 0) {
+        req.session.moonInfo = moonController.moon(dateToAdd); //get information about the moon
+        console.log(req.session.moonInfo);
 
-    NasaController.apod(dateArray[1], dateArray[2])
-      .then(picture => {
-        spaceObj.picture = picture;
-        return spaceObj;
-      })
-      .then(data =>
-        NasaController.asteroidInfo(req.params.date)
+        spaceObj.date = dateToAdd;
+        spaceObj.moon = req.session.moonInfo;
+
+        NasaController.apod(dateArray[1], dateArray[2])
+          .then(apod => {
+            spaceObj.apod = apod;
+            return spaceObj;
+          })
+          .then(data => NasaController.asteroidInfo(req.params.date))
           .then(data => {
-            spaceObj.aseteroids = data;
+            spaceObj.asteroids = data;
             return spaceObj;
           })
           .then(data => NasaController.roverImages(dateArray[1], dateArray[2]))
@@ -54,18 +63,35 @@ module.exports = app => {
           .then(data => NasaController.cme(dateArray[1], dateArray[2]))
           .then(data => {
             console.log(data);
-            spaceObj.cme = data;
+            spaceObj.coronalMassEjection = data;
+            return spaceObj;
+          })
+          .then(data => NasaController.solarFlare(dateArray[1], dateArray[2]))
+          .then(data => {
+            spaceObj.solarFlare = data;
             return spaceObj;
           })
           .then(data =>
-            NasaController.solarFlare(dateArray[1], dateArray[2])
-              .then(data => {
-                spaceObj.solarFlare = data;
-                return spaceObj;
-              })
-              .then(data => console.log(data))
+            NasaController.interPlanetaryShock(dateArray[1], dateArray[2])
           )
-      );
+          .then(data => {
+            spaceObj.interplanetaryShock = data;
+            console.log(spaceObj);
+          })
+          .then(data =>
+            NasaController.geomagneticStorm(dateArray[1], dateArray[2])
+          )
+          .then(data => {
+            spaceObj.geomagneticStorm = data;
+            console.log(spaceObj);
+            spaceInfo.create(spaceObj).then(data => res.send(data));
+          });
+      } else {
+        //value exists
+        console.log("already have data!");
+        res.send(docs);
+      }
+    });
 
     /*let ips = NasaController.interPlanetaryShock(
       parseInt(dateArray[0], 10),
