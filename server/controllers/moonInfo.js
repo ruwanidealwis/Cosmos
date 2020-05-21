@@ -1,5 +1,5 @@
 var SunCalc = require("suncalc"); //import sunCalc
-const geoTz = require("geo-tz");
+//const geoTz = require("geo-tz");
 
 /*let sunInfo = SunCalc.getTimes(date, latitude, long);
 //modules.export.sunset = sunInfo.sunset.toLocaleDateString("en-US", {

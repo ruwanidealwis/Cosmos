@@ -4,7 +4,6 @@ let api_key = config.apiKey;
 console.log(api_key);
 let password = config.password;
 const axios = require("axios"); //make API requests with AXOIS
-let mongoDBUrl = `mongodb+srv//ruwani:${password}@cosmosdatabase-sqsno.mongodb.net/test?retryWrites=true&w=majority`;
 
 let lastCompletedYear = new Date().getFullYear() - 1;
 let yearArray = [lastCompletedYear - 2010];
