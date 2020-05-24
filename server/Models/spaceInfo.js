@@ -12,7 +12,7 @@ const SpaceInformationSchema = new Schema({
     illuminationFraction: Number
   },
   //not unique to year (data limited)
-
+  planets: [{ name: String, riseTime: Date, setTime: Date }],
   //unique to year
   apod: {
     url: String, // astronomy picture of the day

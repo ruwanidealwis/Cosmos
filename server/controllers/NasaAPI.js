@@ -83,10 +83,17 @@ const asteroidInfo = async function(date) {
     })
     .then(response => {
       //console.log("here!");
-
+      console.log(response.data);
       let asteroidArray = [];
       //console.log(asteroidArray);
-      for (let k = 0; k < 3; k++) {
+      let countVal = 3;
+      console.log(response.data.element_count);
+      console.log(typeof response.data.element_count);
+      if (response.data.element_count < countVal) {
+        countVal = response.data.element_count;
+        console.log("conut valuejiozdjioasd");
+      }
+      for (let k = 0; k < countVal; k++) {
         //console.log(k);
         //console.log(date);
         //console.log(response.data.near_earth_objects);

@@ -2,6 +2,7 @@
 //control all the app handling and routes
 let moonController = require("../controllers/moonInfo"); //get the spotifyController modules
 let NasaController = require("../controllers/NasaAPI");
+let planetsController = require("../controllers/astronomy");
 let express = require("express");
 let databaseConnect = require("../Models/connect");
 let spaceInfo = require("../Models/spaceInfo");
@@ -41,10 +42,12 @@ router.get("/space/:date", (req, res) => {
       console.log(err);
     } else if (docs.length == 0) {
       req.session.moonInfo = moonController.moon(dateToAdd); //get information about the moon
+      req.session.planets = planetsController.planets(dateToAdd);
       console.log(req.session.moonInfo);
 
       spaceObj.date = dateToAdd;
       spaceObj.moon = req.session.moonInfo;
+      spaceObj.planets = req.session.planets;
 
       NasaController.apod(dateArray[1], dateArray[2])
         .then(apod => {

@@ -1,35 +1,28 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import landing from "./components/landing";
+import home from "./components/home";
+import Navbar from "./components/navigation";
+import { Route, BrowserRouter, Redirect, useHistory } from "react-router-dom";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { apiResponse: "" };
+class Home extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = { date: "", apiResponse: "" }; //d
   }
-
-  callAPI() {
-    fetch("http://localhost:8000/space/2000-09-29")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }))
-      .catch(err => err);
-  }
-
-  componentDidMount() {
-    this.callAPI();
-  }
-
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.apiResponse}</p>
+      <div className="AppFrontPage">
+        <BrowserRouter>
+          <div className="App">
+            <Route exact path="/" component={home} />
+            <Route path="/space/" component={landing} />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
-export default App;
+export default Home;

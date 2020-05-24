@@ -4,7 +4,7 @@ var SunCalc = require("suncalc"); //import sunCalc
 /*let sunInfo = SunCalc.getTimes(date, latitude, long);
 //modules.export.sunset = sunInfo.sunset.toLocaleDateString("en-US", {
   timezone: geoTz(latitude, long)
-});
+;
 //get the time when the night starts
 modules.export.night = sunInfo.night.toLocaleDateString("en-US", {
   timezone: geoTz(latitude, long)
