@@ -1,0 +1,58 @@
+#root {
+  height: 100vh;
+  background-image: linear-gradient(rgb(30, 4, 59), black);
+  background-repeat: no-repeat;
+  overflow: auto;
+}
+
+.Info {
+  color: white;
+  margin: 10% 8% auto 8%;
+}
+#nextItem {
+  font-size: 20px;
+  color: white;
+  margin: 20% auto 0% 0%;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+/*taken from: https://stackoverflow.com/questions/40256473/make-an-existing-svg-to-spin-loading-icon*/
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#nextItemVV {
+  text-align: center;
+  color: white;
+  font-size: calc(2px + 2vmin);
+  padding: 0%;
+}
+.date {
+  align-items: left;
+  justify-content: left;
+  font-size: calc(22px + 2vmin);
+  color: white;
+  margin: 20% auto 0% 10%;
+  display: flex;
+  text-emphasis-style: bold;
+}
+.image {
+  display: flex;
+  margin: 0% 0 0% 8%;
+  height: 80%;
+  width: 100%;
+  animation: spin 10s linear infinite;
+}
+
+.subInfo {
+  text-align: left;
+  align-items: right;
+
+  font-size: calc(7px + 2vmin);
+  margin: 2% 0% 0% 10%;
+  padding: 3% 0%;
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import landing from "./components/landing";
+import space from "./components/space";
 import home from "./components/home";
-import Navbar from "./components/navigation";
+
 import { Route, BrowserRouter, Redirect, useHistory } from "react-router-dom";
 
 class Home extends React.Component {
@@ -17,7 +17,7 @@ class Home extends React.Component {
         <BrowserRouter>
           <div className="App">
             <Route exact path="/" component={home} />
-            <Route path="/space/" component={landing} />
+            <Route path="/space/" component={space} />
           </div>
         </BrowserRouter>
       </div>

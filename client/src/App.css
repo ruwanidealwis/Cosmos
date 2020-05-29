@@ -1,12 +1,17 @@
 .AppFrontPage {
   text-align: center;
-  min-height: 67vh;
 }
-body {
-  background-image: linear-gradient(#1d0c46, #2b2f77);
-  font-family: INETO CIRCULAR, sans-serif;
+#root {
+  height: 100%;
+  margin: 0;
+  background-image: linear-gradient(rgb(30, 4, 59), black);
+  background-repeat: no-repeat;
+  overflow: auto;
 }
-
+.SubmitButton {
+  border-radius: 12px;
+  padding: 0.5%;
+}
 .App-header {
   margin: 20% auto 0% auto;
   display: flex;

@@ -1,13 +1,15 @@
 import React from "react";
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import ToggleButton from "react-bootstrap/ToggleButton";
 //import landing from "/landing";
 import { Route, BrowserRouter, Redirect, useHistory } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { date: "", apiResponse: "" }; //d
+    this.state = { date: "", apiResponse: "", starArray: [] }; //d
 
     this.handleChange = this.handleChange.bind(this);
     this.sendAPIRequest = this.sendAPIRequest.bind(this);
@@ -79,20 +81,19 @@ class App extends React.Component {
       );
     };
 
-    let starArray = [];
     const createLargeStar = () => {
-      for (let i = 0; i <= 200; i++) {
+      for (let i = 0; i <= 130; i++) {
         let star = newLargeStar();
 
-        starArray.push(star);
+        this.state.starArray.push(star);
       }
     };
 
     const createSmallStar = () => {
-      for (let i = 0; i <= 200; i++) {
+      for (let i = 0; i <= 170; i++) {
         let star = newSmallStar();
         //console.log(star);
-        starArray.push(star);
+        this.state.starArray.push(star);
       }
     };
 
@@ -100,7 +101,7 @@ class App extends React.Component {
     createSmallStar();
     return (
       <div className="AppFrontPage">
-        {starArray}
+        {this.state.starArray}
 
         <header className="App-header">
           <h1 className="App-title"> What were the Cosmos Doing? </h1>
@@ -122,7 +123,11 @@ class App extends React.Component {
           ></input>
           <br></br>
           <br></br>
-          <input type="submit" value="Let's Find Out"></input>
+          <input
+            className="SubmitButton"
+            type="submit"
+            value="Let's Find Out"
+          ></input>
         </form>
       </div>
     );

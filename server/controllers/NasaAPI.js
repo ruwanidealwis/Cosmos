@@ -1,8 +1,7 @@
 // make API calls to NASA API...
-const config = require("../config.js");
+const config = require("../../config.js");
 let api_key = config.apiKey;
 console.log(api_key);
-let password = config.password;
 const axios = require("axios"); //make API requests with AXOIS
 
 let lastCompletedYear = new Date().getFullYear() - 1;
