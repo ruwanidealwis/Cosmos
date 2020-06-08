@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const config = require("../../config.js");
 //connect to database...
 let password = config.password;
-console.log(password);
 
 exports.connect = () => {
   let mongoDBUrl = `mongodb+srv://ruwani:${password}@cosmosdatabase-sqsno.mongodb.net/test?retryWrites=true&w=majority`;

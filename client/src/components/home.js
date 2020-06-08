@@ -1,10 +1,12 @@
 import React from "react";
 import "../App.css";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
 //import landing from "/landing";
 import { Route, BrowserRouter, Redirect, useHistory } from "react-router-dom";
+import Axios from "axios";
 
 class App extends React.Component {
   constructor(props, context) {
@@ -23,25 +25,24 @@ class App extends React.Component {
 
   sendAPIRequest(event) {
     event.preventDefault();
-    fetch(`http://localhost:8000/space/${this.state.date}`)
-      .then(res => res.text())
-      .then(res => {
-        this.setState({ apiResponse: res });
-        console.log("hi");
-        console.log(this.state.apiResponse);
-        //console.log(this.state.context);
-        this.props.history.push({
-          pathname: `/space/`,
-          state: {
-            apiResponse: this.state.apiResponse,
-            date: this.state.date
-          }
-        });
-
-        //return <Redirect to="/space/" />;
-        //history.push("/space/");
-        //event.preventDefault();
+    axios.get(`http://localhost:8000/space/${this.state.date}`).then(res => {
+      console.log(res.data);
+      this.setState({ apiResponse: res.data });
+      console.log("hi");
+      console.log(this.state.apiResponse);
+      //console.log(this.state.context);
+      this.props.history.push({
+        pathname: `/space/`,
+        state: {
+          apiResponse: this.state.apiResponse,
+          date: this.state.date
+        }
       });
+
+      //return <Redirect to="/space/" />;
+      //history.push("/space/");
+      //event.preventDefault();
+    });
   }
 
   callAPI() {

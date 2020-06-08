@@ -1,13 +1,10 @@
-#root {
-  height: 100vh;
+.info {
+  min-height: 100vh;
   background-image: linear-gradient(rgb(30, 4, 59), black);
-  background-repeat: no-repeat;
-  overflow: auto;
-}
-
-.Info {
   color: white;
-  margin: 10% 8% auto 8%;
+  padding: 10% 8% 20% 8%;
+
+  overflow: none;
 }
 #nextItem {
   font-size: 20px;

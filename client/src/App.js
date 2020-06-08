@@ -13,14 +13,10 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div className="AppFrontPage">
-        <BrowserRouter>
-          <div className="App">
-            <Route exact path="/" component={home} />
-            <Route path="/space/" component={space} />
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Route exact path="/" component={home} />
+        <Route exact path="/space/" component={space} />
+      </BrowserRouter>
     );
   }
 }

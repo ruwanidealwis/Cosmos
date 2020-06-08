@@ -1,7 +1,6 @@
 // make API calls to NASA API...
 const config = require("../../config.js");
 let api_key = config.apiKey;
-console.log(api_key);
 const axios = require("axios"); //make API requests with AXOIS
 
 let lastCompletedYear = new Date().getFullYear() - 1;
@@ -278,12 +277,15 @@ const cme = async function(month, day) {
           if (events != []) {
             //get all data
             let cme = events[0];
+            console.log(cme);
             //console.log(cme);
+            let date = cme.startTime;
             let longitude = cme.cmeAnalyses[0].longitude;
             let latitude = cme.cmeAnalyses[0].latitude;
             let speed = cme.cmeAnalyses[0].speed;
             let type = cme.cmeAnalyses[0].type;
             let cmeObj = {
+              date: date,
               longitude: longitude,
               latitude: latitude,
               speed: speed,

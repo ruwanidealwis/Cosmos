@@ -1,0 +1,11 @@
+.moon {
+  min-height: 100vh;
+  color: white;
+  background-image: linear-gradient(black, rgb(30, 4, 59));
+}
+.Mountain {
+  margin: 70% 0% 0% 0%;
+  height: 170%;
+  width: 170%;
+  display: flex;
+}

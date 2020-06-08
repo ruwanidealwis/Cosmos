@@ -48,6 +48,7 @@ const SpaceInformationSchema = new Schema({
     location: String
   },
   coronalMassEjection: {
+    date: Date, //exact date it occurred
     longitude: Number,
     latitidue: Number,
     speed: Number,

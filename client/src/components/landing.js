@@ -2,7 +2,6 @@ import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import "./styles/landing.css";
-import planet from "./images/planet (3).png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,11 +13,10 @@ const convertToDate = date => {
   return myDate.format("LL");
 };
 
-const landing = ({ date }) => {
+const landing = ({ date, link }) => {
   console.log(StarArray);
   return (
-    <div className="Info">
-      <StarArray />
+    <div className="info">
       <Row>
         <Col>
           <h1 className="date">
@@ -34,12 +32,10 @@ const landing = ({ date }) => {
             tell you a little more about what the world was up to!
             <br></br>
             <br></br>
-            <Link id="nextItem" className="subInfo" to="/">
-              I want to learn more!
-            </Link>
+            <p>I want to learn more!</p>
             <br></br>
-            <Link id="nextItemVV" className="subInfo" to="/">
-              vv
+            <Link id="nextItemVV" className="subInfo">
+              ↓
             </Link>
           </h5>
         </Col>

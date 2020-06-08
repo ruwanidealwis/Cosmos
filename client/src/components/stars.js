@@ -7,6 +7,7 @@ const newSmallStar = () => {
       className="star"
       style={{
         top: Math.random() * 100 + "%",
+        position: "fixed",
         left: Math.random() * 100 + "%",
         width: "1.5px",
         height: "1.5px"

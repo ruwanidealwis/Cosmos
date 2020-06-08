@@ -1,12 +1,12 @@
 .AppFrontPage {
   text-align: center;
-}
-#root {
-  height: 100%;
-  margin: 0;
   background-image: linear-gradient(rgb(30, 4, 59), black);
+  min-height: 100vh;
   background-repeat: no-repeat;
   overflow: auto;
+}
+#root {
+  margin: 0;
 }
 .SubmitButton {
   border-radius: 12px;
