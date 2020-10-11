@@ -1,0 +1,34 @@
+<svg width="350" height="350" viewBox="0 0 350 350" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter0_d)">
+        <circle cx="175" cy="175" r="125" fill="#C8D0E6"/>
+    </g>
+
+    <path opacity="0.1" d="M175 175.5C175 165.835 166.941 158 157 158C147.059 158 139 165.835 139 175.5C139 185.165 147.059 193 157 193C166.941 193 175 185.165 175 175.5Z" fill="black"/>
+    <ellipse opacity="0.2" cx="82" cy="181" rx="18" ry="20" fill="black"/>
+    <ellipse opacity="0.1" cx="249" cy="181" rx="18" ry="20" fill="black"/>
+    <ellipse opacity="0.1" cx="197.5" cy="254" rx="22.5" ry="23" fill="black"/>
+    <ellipse opacity="0.1" cx="131" cy="120" rx="17" ry="19" fill="black"/>
+    <path opacity="0.2" d="M202 142C202 148.075 197.075 153 191 153C184.925 153 180 148.075 180 142C180 135.925 184.925 131 191 131C197.075 131 202 135.925 202 142Z" fill="black"/>
+    <path opacity="0.2" d="M202 189C202 193.418 198.418 197 194 197C189.582 197 186 193.418 186 189C186 184.582 189.582 181 194 181C198.418 181 202 184.582 202 189Z" fill="black"/>
+    <path opacity="0.2" d="M82 134C82 138.418 78.4183 142 74 142C69.5817 142 66 138.418 66 134C66 129.582 69.5817 126 74 126C78.4183 126 82 129.582 82 134Z" fill="black"/>
+    <path opacity="0.2" d="M275 209C275 213.418 271.418 217 267 217C262.582 217 259 213.418 259 209C259 204.582 262.582 201 267 201C271.418 201 275 204.582 275 209Z" fill="black"/>
+    <path opacity="0.2" d="M125 231C125 237.075 120.075 242 114 242C107.925 242 103 237.075 103 231C103 224.925 107.925 220 114 220C120.075 220 125 224.925 125 231Z" fill="black"/>
+    <ellipse opacity="0.2" cx="167" cy="80" rx="10" ry="11" fill="black"/>
+    <ellipse opacity="0.1" cx="229" cy="111" rx="18" ry="20" fill="black"/>
+    <defs>
+        <filter id="filter0_d" x="0" y="0" width="350" height="350" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+            <feOffset/>
+            <feGaussianBlur stdDeviation="25"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/>
+            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="146.5" y1="300" x2="175" y2="300" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#6F7687" stop-opacity="0"/>
+            <stop offset="1" stop-color="#C8D0E6"/>
+        </linearGradient>
+    </defs>
+</svg>

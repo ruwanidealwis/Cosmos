@@ -25,7 +25,7 @@ class App extends React.Component {
 
   sendAPIRequest(event) {
     event.preventDefault();
-    axios.get(`http://localhost:8000/space/${this.state.date}`).then(res => {
+    axios.get(`http://localhost:8000/space/${this.state.date}`).then((res) => {
       console.log(res.data);
       this.setState({ apiResponse: res.data });
       console.log("hi");
@@ -35,8 +35,8 @@ class App extends React.Component {
         pathname: `/space/`,
         state: {
           apiResponse: this.state.apiResponse,
-          date: this.state.date
-        }
+          date: this.state.date,
+        },
       });
 
       //return <Redirect to="/space/" />;
@@ -47,9 +47,9 @@ class App extends React.Component {
 
   callAPI() {
     fetch("http://localhost:8000/")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }))
-      .catch(err => err);
+      .then((res) => res.text())
+      .then((res) => this.setState({ apiResponse: res }))
+      .catch((err) => err);
   }
   //componentDidMount() {
   // this.callAPI();
@@ -63,7 +63,7 @@ class App extends React.Component {
             top: Math.random() * 100 + "%",
             left: Math.random() * 100 + "%",
             width: "1.5px",
-            height: "1.5px"
+            height: "1.5px",
           }}
         ></div>
       );
@@ -76,7 +76,7 @@ class App extends React.Component {
             top: Math.random() * 100 + "%",
             left: Math.random() * 100 + "%",
             width: "3.3px",
-            height: "3.3px"
+            height: "3.3px",
           }}
         ></div>
       );

@@ -15,10 +15,9 @@ app.use(
   session({
     secret: "Shh, its a secret!",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
-//require node module for the spotify api
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));

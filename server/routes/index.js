@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
   //should allow user to enter date and location....
   res.json({
     status: "success",
-    message: "Welcome To What Were the Cosmos Doing"
+    message: "Welcome To What Were the Cosmos Doing",
   });
 });
 router.post("/", (req, res) => {
@@ -27,8 +27,8 @@ router.post("/", (req, res) => {
       url.format({
         pathName: "/space",
         query: {
-          date: date
-        }
+          date: date,
+        },
       })
     );
 });
@@ -59,45 +59,50 @@ router.get("/space/:date", (req, res) => {
         spaceObj.planets = req.session.planets;
 
         NasaController.apod(dateArray[1], dateArray[2])
-          .then(apod => {
+          .then((apod) => {
             spaceObj.apod = apod;
             return spaceObj;
           })
-          .then(data => NasaController.asteroidInfo(req.params.date))
-          .then(data => {
+          .then((data) => NasaController.asteroidInfo(req.params.date))
+          .then((data) => {
             spaceObj.asteroids = data;
             return spaceObj;
           })
-          .then(data => NasaController.roverImages(dateArray[1], dateArray[2]))
-          .then(marsRover => {
+          .then((data) =>
+            NasaController.roverImages(dateArray[1], dateArray[2])
+          )
+          .then((marsRover) => {
             spaceObj.marsRover = marsRover;
             return spaceObj;
           })
-          .then(data => NasaController.cme(dateArray[1], dateArray[2]))
-          .then(data => {
+          .then((data) => NasaController.cme(dateArray[1], dateArray[2]))
+          .then((data) => {
             console.log(data);
             spaceObj.coronalMassEjection = data;
+            console.log("CORONAL MASS EJECTION");
+            console.log(spaceObj.coronalMassEjection);
             return spaceObj;
           })
-          .then(data => NasaController.solarFlare(dateArray[1], dateArray[2]))
-          .then(data => {
+          .then((data) => NasaController.solarFlare(dateArray[1], dateArray[2]))
+          .then((data) => {
             spaceObj.solarFlare = data;
             return spaceObj;
           })
-          .then(data =>
+          .then((data) =>
             NasaController.interPlanetaryShock(dateArray[1], dateArray[2])
           )
-          .then(data => {
+          .then((data) => {
             spaceObj.interplanetaryShock = data;
-            console.log(spaceObj);
+            return spaceObj;
           })
-          .then(data =>
+          .then((data) =>
             NasaController.geomagneticStorm(dateArray[1], dateArray[2])
           )
-          .then(data => {
+          .then((data) => {
             spaceObj.geomagneticStorm = data;
+            console.log("FINAL DATA");
             console.log(spaceObj);
-            spaceInfo.create(spaceObj).then(data => res.send(data));
+            spaceInfo.create(spaceObj).then((data) => res.send(data));
           });
       } else {
         //value exists

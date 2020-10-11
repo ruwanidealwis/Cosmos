@@ -4,8 +4,25 @@ const chaiHttp = require("chai-http");
 const { expect } = chai;
 chai.use(chaiHttp);
 
+const originalLogFunction = console.log;
+let output;
+
 describe("Test Entry", () => {
-  it("Tests server working", done => {
+  //taken from:https://stackoverflow.com/questions/53100760/mocha-hide-console-log-output-from-successful-tests/53102024
+  beforeEach(function (done) {
+    output = "";
+    console.log = (msg) => {
+      output += msg + "\n";
+    };
+  });
+
+  afterEach(function () {
+    console.log = originalLogFunction; // undo dummy log function
+    if (this.currentTest.state === "failed") {
+      console.log(output);
+    }
+  });
+  it("Tests server working", (done) => {
     chai
       .request(app)
       .get("/")
@@ -17,7 +34,7 @@ describe("Test Entry", () => {
         done();
       });
   });
-  it("Tests date after today", done => {
+  it("Tests date after today", (done) => {
     chai
       .request(app)
       .get("/space/2340-03-20")
@@ -28,7 +45,7 @@ describe("Test Entry", () => {
       });
   });
 
-  it("Tests random sequence", done => {
+  it("Tests random sequence", (done) => {
     chai
       .request(app)
       .get("/space/asdjoaisdjioasdjio")
@@ -39,7 +56,7 @@ describe("Test Entry", () => {
       });
   });
 
-  it("Tests good request", done => {
+  it("Tests good request", (done) => {
     chai
       .request(app)
       .get("/space/2000-09-29")

@@ -15,7 +15,7 @@
     "moment": "^2.26.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
-    "react-bootstrap": "^1.0.1",
+    "react-bootstrap": "^1.2.1",
     "suncalc": "^1.8.0"
   },
   "devDependencies": {
