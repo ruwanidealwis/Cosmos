@@ -22,8 +22,13 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "geo-tz": "^6.0.0",
+    "jquery.redirect": "^1.1.4",
+    "moment": "^2.29.1",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
+    "node-vibrant": "^3.1.5",
+    "papaparse": "^5.3.0",
+    "pug": "^3.0.0",
     "suncalc": "^1.8.0"
   }
 }

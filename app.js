@@ -11,15 +11,16 @@ app.use(
   session({
     secret: "Shh, its a secret!",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 //require node module for the spotify api
 app.use(express.static("./public"));
+app.set("view engine", "pug");
 //set up listening on local host
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 8000;
+  port = 5000;
 }
 app.listen(port, () => console.log(`app listening on port ${port}`)); //app is now listening on port
 

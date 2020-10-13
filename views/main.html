@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <title>Colour Your Playlists</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+    <link href="/assets/css/main.css" type="text/css" rel="stylesheet">
+
+    <script src="/assets/randomColor.js"></script>
+    <script src="/assets/vibrant.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="/assets/images/planet.svg" width="30%" />
+        <h1>MY SPACE BARCODE</h1>
+        <div class=" col s12">
+            <h4>Enter Your Birthday (or any other day) To Get a Space
+                Barcode</h4>
+            <form class="form-group" id="dateForm"><input class="input-field col s6" id="date" type="date"
+                    name="date" /><br><br><input class="btn btn-lg btn-large btn-primary" id="submit" type="submit"
+                    value="Submit" />
+            </form>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div id="barcode" class="col-md-4">
+                <h4>Your Personal Barcode</h4><br><br>
+            </div>
+            <div class="col-md-8" id="explanation">
+                <h4>What Does it All Mean?</h4><br><br>
+            </div>
+
+        </div>
+
+</body>
+<footer>
+    <script type="text/javascript" src="/assets/mainFileHandler.js"></script>
+</footer>
+
+</html>

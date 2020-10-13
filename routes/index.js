@@ -2,16 +2,17 @@
 //control all the app handling and routes
 let moonController = require("../controllers/moonInfo"); //get the spotifyController modules
 let NasaController = require("../controllers/NasaAPI");
+let HubbleData = require("../controllers/hubbleData.js");
 let express = require("express");
 let databaseConnect = require("../Models/connect");
 let spaceInfo = require("../Models/spaceInfo.js");
 databaseConnect.connect();
 //handles all the possible routes
-module.exports = app => {
+module.exports = (app) => {
   app.get("/", (req, res) => {
     //load pain page
     //should allow user to enter date and location....
-    res.send("hi");
+    res.render("main.pug");
   });
   app.post("/", (req, res) => {
     //get information about date and year....
@@ -20,10 +21,14 @@ module.exports = app => {
       url.format({
         pathName: "/space",
         query: {
-          date: date
-        }
+          date: date,
+        },
       })
     );
+  });
+  app.post("/help", (req, res) => {
+    console.log("req...");
+    console.log(req.body);
   });
   app.get("/space/:date", (req, res) => {
     let dateArray = req.params.date.split("-"); //"YYYY-MM-DD"
@@ -32,64 +37,70 @@ module.exports = app => {
       parseInt(dateArray[1], 10) - 1,
       parseInt(dateArray[2], 10)
     );
+
+    req.session.date = dateToAdd;
     let exist = true;
     let spaceObj = {};
+
     //must now call all the methods....but check if database already has queried for this data to avoid unessecary calls
-    spaceInfo.find({ date: dateToAdd }, (err, docs) => {
+    spaceInfo.find({ date: req.session.date }, (err, docs) => {
       if (err) {
         console.log(err);
       } else if (docs.length == 0) {
-        req.session.moonInfo = moonController.moon(dateToAdd); //get information about the moon
+        req.session.moonInfo = moonController.moon(req.session.dateToAdd); //get information about the moon
         console.log(req.session.moonInfo);
 
-        spaceObj.date = dateToAdd;
+        spaceObj.date = req.session.date;
         spaceObj.moon = req.session.moonInfo;
 
         NasaController.apod(dateArray[1], dateArray[2])
-          .then(apod => {
+          .then((apod) => {
             spaceObj.apod = apod;
             return spaceObj;
           })
-          .then(data => NasaController.asteroidInfo(req.params.date))
-          .then(data => {
+          .then((data) => NasaController.asteroidInfo(req.params.date))
+          .then((data) => {
             spaceObj.asteroids = data;
             return spaceObj;
           })
-          .then(data => NasaController.roverImages(dateArray[1], dateArray[2]))
-          .then(marsRover => {
-            spaceObj.marsRover = marsRover;
-            return spaceObj;
-          })
-          .then(data => NasaController.cme(dateArray[1], dateArray[2]))
-          .then(data => {
-            console.log(data);
-            spaceObj.coronalMassEjection = data;
-            return spaceObj;
-          })
-          .then(data => NasaController.solarFlare(dateArray[1], dateArray[2]))
-          .then(data => {
+          .then((data) => NasaController.solarFlare(dateArray[1], dateArray[2]))
+          .then((data) => {
             spaceObj.solarFlare = data;
             return spaceObj;
           })
-          .then(data =>
-            NasaController.interPlanetaryShock(dateArray[1], dateArray[2])
-          )
-          .then(data => {
-            spaceObj.interplanetaryShock = data;
-            console.log(spaceObj);
-          })
-          .then(data =>
+          .then((data) =>
             NasaController.geomagneticStorm(dateArray[1], dateArray[2])
           )
-          .then(data => {
+          .then((data) => {
             spaceObj.geomagneticStorm = data;
+          })
+          .then((data) =>
+            NasaController.interPlanetaryShock(dateArray[1], dateArray[2])
+          )
+          .then((data) => {
+            spaceObj.interPlanetaryShock = data;
+            return spaceObj;
+          })
+          .then((data) => {
+            return HubbleData.getHubbleImage(
+              req.session.date.toLocaleString("default", {
+                month: "long",
+              }) +
+                " " +
+                req.session.date.getDate() +
+                " 2019"
+            );
+          })
+          .then((data) => {
+            spaceObj.hubble = data;
+            spaceInfo.create(spaceObj).then((data) => res.send(data));
             console.log(spaceObj);
-            spaceInfo.create(spaceObj).then(data => res.send(data));
           });
       } else {
         //value exists
+        spaceInfo.deleteMany();
         console.log("already have data!");
-        res.send(docs);
+        res.send(docs[0]);
       }
     });
 
