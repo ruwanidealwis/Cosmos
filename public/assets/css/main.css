@@ -1,7 +1,7 @@
 body {
   font-family: "Roboto", sans-serif;
   color: white;
-  background-color: rgb(40, 29, 66) !important;
+  background-color: #9fa8da !important;
   text-align: center;
 }
 h1 {
@@ -44,7 +44,11 @@ html {
   text-align: center;
   justify-content: center;
   background-color: rgb(26, 26, 26);
-  box-shadow: 17px 17px rgb(2, 58, 58);
+  box-shadow: 17px 17px #607d8b;
+}
+.btn {
+  background-color: #607d8b !important;
+  border: none !important;
 }
 .row {
   padding-left: 8%;
@@ -73,17 +77,18 @@ html {
 }
 strong {
   font-weight: 700 !important;
-  color: pink;
+  color: #9fa8da;
 }
 #rocket {
-  width: 100%;
+  width: 120%;
   margin-left: 30%;
+  padding-top: 50%;
 }
 h4 {
   font-weight: 700;
 }
 #barcodeRendering {
-  width: 50%;
+  width: 70%;
   display: none;
   padding-bottom: 2%;
   text-align: left;
