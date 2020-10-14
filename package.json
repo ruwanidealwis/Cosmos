@@ -29,6 +29,7 @@
     "node-vibrant": "^3.1.5",
     "papaparse": "^5.3.0",
     "pug": "^3.0.0",
-    "suncalc": "^1.8.0"
+    "suncalc": "^1.8.0",
+    "trim-canvas": "^0.1.2"
   }
 }

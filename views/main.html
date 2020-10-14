@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>Colour Your Playlists</title>
+    <title>My Space Barcode</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
         crossorigin="anonymous"></script>
@@ -10,6 +10,7 @@
 
     <script src="/assets/randomColor.js"></script>
     <script src="/assets/vibrant.js"></script>
+    <script src="/assets/trimCanvas.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -30,16 +31,27 @@
                     name="date" /><br><br><input class="btn btn-lg btn-large btn-primary" id="submit" type="submit"
                     value="Submit" />
             </form>
-        </div>
+            <img id="loadingImg" src="/assets/images/ajax-loader.gif"> </img>
 
+        </div>
     </div>
-    <div class="container">
+    <div class="container" id="barcodeRendering">
         <div class="row">
-            <div id="barcode" class="col-md-4">
+            <div id="barcode" class="col-lg-8">
                 <h4>Your Personal Barcode</h4><br><br>
             </div>
-            <div class="col-md-8" id="explanation">
+            <div class="col-lg-4">
+                <img id="rocket" class="d-none d-lg-block" src="/assets/images/rocket.svg"></img>
+            </div>
+
+            <div class="col-lg-12" id="explanation">
                 <h4>What Does it All Mean?</h4><br><br>
+            </div>
+            <div class="col-md-12">
+                <div class="footer">
+                    <br><br>
+                    All Data was provided by the <a href="https://api.nasa.gov/">NASA</a>
+                </div>
             </div>
 
         </div>

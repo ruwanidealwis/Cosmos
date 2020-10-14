@@ -18,6 +18,7 @@ const SpaceInformationSchema = new Schema({
   apod: {
     url: String, // astronomy picture of the day
     explanation: String,
+    date: String,
   },
   //unique to year
   asteroids: {

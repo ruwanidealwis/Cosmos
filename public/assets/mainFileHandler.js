@@ -1,4 +1,6 @@
+let trimCanvas = require("trim-canvas");
 window.onload = () => {
+  console.log(trimCanvas);
   /*for (let i = 0; i < 200; i++) {
     let star = document.createElement("div");
     star.className = "star";
@@ -12,6 +14,12 @@ window.onload = () => {
     $.ajax({
       type: "GET",
       url: "/space/" + e.target[0].value,
+      beforeSend: function () {
+        $("#loadingImg").show();
+      },
+      complete: function () {
+        $("#loadingImg").hide();
+      },
       success: function (data) {
         console.log(data);
         createMyImage(data);
@@ -20,13 +28,16 @@ window.onload = () => {
   });
 };
 async function createMyImage(spaceData) {
-  let colorArray = ["#000080", "#4B0082", "#B22222", "#FF6347"];
+  let date = new Date(spaceData.date);
+  console.log(date);
   console.log(spaceData);
   let img = document.createElement("img");
+
   img.setAttribute("id", "svg");
   img.setAttribute("width", "500");
   img.setAttribute("height", "200");
   let canvas = document.createElement("canvas");
+  canvas.setAttribute("id", "barcodeCanvas");
   canvas.setAttribute("width", 2000);
   canvas.setAttribute("height", 1200);
 
@@ -37,148 +48,89 @@ async function createMyImage(spaceData) {
   ctx.scale(2.5, 2.5);
 
   let barcodePalette = await getColors(spaceData);
-  drawBarcode(barcodePalette, spaceData, ctx);
+  let index = drawBarcode(barcodePalette, spaceData, ctx);
 
-  let textExplanation = `${spaceData.asteroids.asteroidInfo[0].missDistanceKM}: Miss distance of the first aesteroid to pass by earth on this day.`;
-  let explanation =
-    "<strong>First 6 Bars:</strong>: Dominant colour's of NASA's Astronomy Picture of the Day.  <br><br><strong>Bars 6-12:</strong> Dominant colours of the picture taken by the Hubble Telescope on this day. <br> <br> ";
+  let textExplanation = `<strong>${
+    spaceData.asteroids.asteroidInfo[0].missDistanceKM
+  }:</strong> Miss distance of the first aesteroid to pass by earth on ${new Date(
+    spaceData.date
+  ).toDateString()}.<br><br>`;
+  let explanation = `<strong>First 6 Bars:</strong> Dominant colour's of NASA's Astronomy Picture of the Day in ${new Date(
+    spaceData.apod.date
+  ).getFullYear()}.<br><br><strong>Bars 6-12:</strong> Dominant colours of the picture taken by the Hubble Telescope on this day in 2019. <br> <br> `;
 
   if (spaceData.solarFlare) {
     explanation =
       explanation +
-      " <strong>Shades of Red:</strong>: A Solar Flare occured on the aniversary of this data.<br> <br>";
+      `<strong>Shades of Red:</strong> A Solar Flare occured on this day in ${new Date(
+        spaceData.solarFlare.peakTime
+      ).getFullYear()}.<br> <br>`;
 
     textExplanation =
       textExplanation +
-      `${spaceData.solarFlare.location}: Area in space where the Solar Flare occured.<br> <br>`;
+      `<strong>${spaceData.solarFlare.location}:</strong> Area in space where the Solar Flare occured.<br> <br>`;
   }
 
   if (spaceData.interPlanetaryShock) {
     explanation =
       explanation +
-      " <strong>Shades of Green:</strong>: An interplanetary shock occured on the aniversary of this data.<br> <br>";
+      `<strong>Shades of Green:</strong> An interplanetary shock occured on this date in ${new Date(
+        spaceData.interPlanetaryShock.time
+      ).getFullYear()}.<br> <br>`;
     textExplanation =
       textExplanation +
-      `${spaceData.interPlanetaryShock.location}: Area in space where the interplanetary shock occured.<br> <br>`;
+      `<strong>${spaceData.interPlanetaryShock.location}</strong>: Area in space where the interplanetary shock occured.<br> <br>`;
   }
 
   if (spaceData.geomagneticStorm) {
     explanation =
       explanation +
-      "<strong>Shades of Neon:</strong>: on the aniversary of this date there was a Geomagnetic Storm. The thickness of these bands depends on the disturbance caused by the storm.<br>";
+      `<strong>Shades of Neon:</strong> on the this day in ${new Date(
+        spaceData.geomagneticStorm.startTime
+      ).getFullYear()} Geomagnetic Storm. The thickness of these bands depends on the disturbance caused by the storm.<br><br>`;
   }
 
-  explanation =
-    explanation +
-    `Band ${spaceData.asteroids.count}: Thicker and shorter than the rest because on this day there were ${spaceData.asteroids.count} that passed by the earth.<br>`;
+  if (spaceData.asteroids.count < barcodePalette.length)
+    explanation =
+      explanation +
+      `<strong>Band ${spaceData.asteroids.count}:</strong> Thicker and shorter than the rest because on this day ${spaceData.asteroids.count} asteroids were closest to earth on their path.<br>`;
 
-  explanation = explanation + "<br><br>" + textExplanation;
-
+  explanation = explanation + "<br>" + textExplanation;
+  //console.log(trimCanvas);
+  //canvas = trimCanvas(canvas);
   let barcode = document.getElementById("barcode");
+  barcode.setAttribute("class", "align-middle");
+  //check if canvas already exists
+
+  let documentCanvas = document.getElementById("barcodeCanvas");
+  let documentExplanation = document.getElementById("explanation");
+  if (documentCanvas != null) {
+    barcode.removeChild(documentCanvas);
+    //if canvas present, so is text
+
+    documentExplanation.removeChild(document.getElementById("explanationText"));
+  }
   barcode.appendChild(canvas);
 
-  barcode.style.display = "block";
-  barcode.scrollIntoView({ behavior: "smooth", block: "end" });
+  document.getElementById("barcodeRendering").style.display = "block";
+  documentExplanation.scrollIntoView({
+    behavior: "smooth",
+    block: "end",
+    inline: "center",
+    offset: { top: 300, left: 0 },
+  });
   let div = document.createElement("div");
+  div.setAttribute("id", "explanationText");
+
+  $("html,body").animate(
+    {
+      scrollTop: $("#barcode").offset().top,
+    },
+    1000
+  );
   div.innerHTML = explanation;
 
-  document.getElementById("explanation").append(div);
-  /*let randomSkyColor =
-    colorArray[Math.floor(Math.random() * colorArray.length)];
-  var color = randomColor();
-  let fixedSkyRandomColor = randomColor({
-    count: 4,
-    hue: randomSkyColor,
-  });
-  console.log(fixedSkyRandomColor);*/
-
-  //document.body.appendChild(canvas);
-  /*canvas.backgroundColor = fixedSkyRandomColor;
-  let backgroundRect = new fabric.Rect({
-    left: 0,
-    top: 0,
-    width: canvas.width,
-    height: canvas.height,
-  });
-  canvas.add(backgroundRect);
-
-  var colorStops = [
-    { offset: 0, color: "white", opacity: 1 },
-    { offset: 0.5, color: randomSkyColor, opacity: 1 },
-    {
-      offset: 1,
-      color: randomColor({
-        luminosity: "dark",
-        hue: randomSkyColor,
-      }),
-    },
-  ];
-
-  let gradient = new fabric.Gradient({
-    coords: {
-      x1: 0,
-      y1: canvas.height,
-      x2: 0,
-      y2: 0,
-    },
-    colorStops: colorStops,
-  });
-
-  var neonColorStops = [
-    { offset: 0, color: "#42de61", opacity: 1 },
-    { offset: 0.5, color: "pink", opacity: 0.3 },
-    { offset: 1, color: "white", opacity: 0.3 },
-    {
-      offset: 1,
-      color: randomColor({
-        luminosity: "dark",
-        hue: randomSkyColor,
-      }),
-    },
-  ];
-
-  backgroundRect.set("fill", gradient);
-  for (let i = 0; i < 300; i++) {
-    canvas.add(
-      new fabric.Circle({
-        radius: 2,
-        fill: "white",
-        top: Math.random() * 500,
-        left: Math.random() * 1000,
-      })
-    );
-  }
-  drawLights(canvas);
-
-  drawBuildings(spaceData, canvas, randomSkyColor);
-  /*let moon = new fabric.Circle({
-    radius: 50,
-    top: 20,
-    left: 40,
-    fill: "black",
-  });
-
-  moon.set(
-    "shadow",
-    new fabric.Shadow({
-      color: "white",
-      blur: -90,
-      offsetX: -(100 - (spaceData.moon.phase / 2) * 100),
-      offsetY: -(100 - (spaceData.moon.phase / 2) * 100),
-    })
-  );
-  canvas.add(moon);*/
-
-  var filter = new fabric.Pixelate({
-    blocksize: 8,
-  });
-
-  /*canvas.filters.push(filter);
-  canvas.applyFilters();
-  canvas.toSVG();
-  console.log(canvas.toSVG());
-  img.innerHTML = canvas.toSVG();
-  document.body.appendChild(img);*/
+  documentExplanation.append(div);
 }
 
 async function getColors(spaceData) {
@@ -404,7 +356,9 @@ function drawBarcode(barcodePalette, spaceData, ctx) {
     ctx.stroke();
     index = index + 30;
   }
+
   writeText(ctx, spaceData, index);
+  return index; //returns where the last bar is
 }
 
 function writeText(ctx, spaceData, index) {
