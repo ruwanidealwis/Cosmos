@@ -55,9 +55,9 @@ async function createMyImage(spaceData) {
   }:</strong> Miss distance of the first aesteroid to pass by earth on ${new Date(
     spaceData.date
   ).toDateString()}.<br><br>`;
-  let explanation = `<strong>First 6 Bars:</strong> Dominant colour's of NASA's Astronomy Picture of the Day in ${new Date(
+  let explanation = `<strong>Bars 1-6:</strong> Dominant colour's of NASA's Astronomy Picture of the Day in ${new Date(
     spaceData.apod.date
-  ).getFullYear()}.<br><br><strong>Bars 6-12:</strong> Dominant colours of the picture taken by the Hubble Telescope on this day in 2019. <br> <br> `;
+  ).getFullYear()}.<br><br><strong>Bars 7-12:</strong> Dominant colours of the picture taken by the Hubble Telescope on this day in 2019. <br> <br> `;
 
   if (spaceData.solarFlare) {
     explanation =
