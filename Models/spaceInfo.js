@@ -9,14 +9,16 @@ const SpaceInformationSchema = new Schema({
   //unique to year
   moon: {
     phase: Number,
-    illuminationFraction: Number
+    illuminationFraction: Number,
   },
+  hubble: String,
   //not unique to year (data limited)
 
   //unique to year
   apod: {
     url: String, // astronomy picture of the day
-    explanation: String
+    explanation: String,
+    date: String,
   },
   //unique to year
   asteroids: {
@@ -30,14 +32,14 @@ const SpaceInformationSchema = new Schema({
         maxDiameter: Number, //in meters
         closestTime: String,
         velocityKM: Number,
-        missDistanceKM: Number
-      }
-    ]
+        missDistanceKM: Number,
+      },
+    ],
   },
   marsRover: [
     {
-      url: String
-    }
+      url: String,
+    },
   ],
   //not unique to year because events are rare!
   //these fields are unique to each users, in some cases interplanetery shocks never occured
@@ -45,22 +47,22 @@ const SpaceInformationSchema = new Schema({
   solarFlare: {
     peakTime: String,
     class: String,
-    location: String
+    location: String,
   },
   coronalMassEjection: {
     longitude: Number,
     latitidue: Number,
     speed: Number,
-    Type: String //common, occasional,rare,extremely rare
+    Type: String, //common, occasional,rare,extremely rare
   },
-  interplanetaryShock: {
+  interPlanetaryShock: {
     location: String,
-    time: String
+    time: String,
   },
   geomagneticStorm: {
     startTime: Date,
-    KPIndex: Number
-  }
+    KPIndex: Number,
+  },
 });
 
 const SpaceInformation = mongoose.model("spaceInfo", SpaceInformationSchema);

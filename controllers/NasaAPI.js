@@ -24,30 +24,31 @@ function randomInteger(min, max) {
 
 //getting the astronomy picture of the day
 
-const apod = async function(month, day) {
+const apod = async function (month, day) {
   let year = randomInteger(2012, lastCompletedYear); //image quality much better
   //console.log(year);
   return axios
     .get(`https://api.nasa.gov/planetary/apod?`, {
       params: {
         api_key: api_key,
-        date: `${year}-${month}-${day}`
-      }
+        date: `${year}-${month}-${day}`,
+      },
     })
-    .then(response => {
+    .then((response) => {
       let apodInfo = {
         url: response.data.url,
-        explanation: response.data.explanation
+        date: response.data.date,
+        explanation: response.data.explanation,
       };
       return apodInfo;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 };
 
 //get Mars Rover for specific date
-const roverImages = async function(month, day) {
+const roverImages = async function (month, day) {
   //get years between 2015 and 2020
   //let year = randomInteger(2015, lastCompletedYear); //get a random year
   let returnVal = await axios
@@ -55,10 +56,10 @@ const roverImages = async function(month, day) {
       params: {
         earth_date: `2016-${month}-${day}`,
         camera: "mast",
-        api_key: api_key
-      }
+        api_key: api_key,
+      },
     })
-    .then(response => {
+    .then((response) => {
       let images = [];
       for (l = 0; l < 3; l++) {
         images[l] = { url: response.data.photos[l].img_src };
@@ -66,23 +67,24 @@ const roverImages = async function(month, day) {
 
       return images;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
   return returnVal;
 };
 
-const asteroidInfo = async function(date) {
+const asteroidInfo = async function (date) {
   console.log("making request");
+  console.log(date);
   let returnVal = await axios
     .get(`https://api.nasa.gov/neo/rest/v1/feed?`, {
       params: {
         start_date: date,
         end_date: date,
-        api_key: api_key
-      }
+        api_key: api_key,
+      },
     })
-    .then(response => {
+    .then((response) => {
       //console.log("here!");
 
       let asteroidArray = [];
@@ -115,7 +117,7 @@ const asteroidInfo = async function(date) {
           maxDiameter: maxDiameter,
           closestTime: closestTime,
           velocityKM: velocityKM,
-          missDistanceKM: missDistanceKM
+          missDistanceKM: missDistanceKM,
         };
         //console.log("jsaiodjasiodjasoidjaiosdjio");
         //console.log(obj);
@@ -127,7 +129,7 @@ const asteroidInfo = async function(date) {
       let count = response.data.element_count;
       // console.log(count);
       let hazardCount = response.data.near_earth_objects[date].filter(
-        asteroid => {
+        (asteroid) => {
           asteroid.is_potentially_hazardous_asteroid == true;
         }
       );
@@ -135,18 +137,18 @@ const asteroidInfo = async function(date) {
       let asteroidObj = {
         count: count,
         hazardCount: hazardCount.length,
-        asteroidInfo: asteroidArray
+        asteroidInfo: asteroidArray,
       };
       //console.log(asteroidObj);
       return asteroidObj;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("hi");
     });
   return returnVal;
 };
 
-const interPlanetaryShock = async function(month, day) {
+const interPlanetaryShock = async function (month, day) {
   let promises = [];
   let returnVal = {};
   for (i = 0; i < yearArray.length; i++) {
@@ -155,12 +157,12 @@ const interPlanetaryShock = async function(month, day) {
         params: {
           startDate: `${yearArray[i]}-${month}-${day}`,
           endDate: `${yearArray[i]}-${month}-${day}`,
-          api_key: api_key
-        }
+          api_key: api_key,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data != "") {
-          let events = response.data.filter(event => {
+          let events = response.data.filter((event) => {
             //console.log(response.data);
             let eventDate = new Date(event.eventTime);
             let eventmonth = eventDate.getUTCMonth();
@@ -172,7 +174,7 @@ const interPlanetaryShock = async function(month, day) {
             let time = events[0].eventTime;
             let ipsObejct = {
               location: location,
-              time: time
+              time: time,
             };
             i = yearArray.length; //short circuit the loop
             return ipsObejct;
@@ -183,7 +185,7 @@ const interPlanetaryShock = async function(month, day) {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
@@ -193,7 +195,7 @@ const interPlanetaryShock = async function(month, day) {
 };
 //date has to be in UTC!
 
-const solarFlare = async function(month, day) {
+const solarFlare = async function (month, day) {
   let promises = [];
   let returnVal = {};
   for (j = 0; j < yearArray.length; j++) {
@@ -202,13 +204,13 @@ const solarFlare = async function(month, day) {
         params: {
           startDate: `${yearArray[j]}-${month}-${day}`,
           endDate: `${yearArray[j]}-${month}-${day}`,
-          api_key: api_key
-        }
+          api_key: api_key,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data != "") {
           //console.log("The year" + yearArray[i]);
-          let events = response.data.filter(event => {
+          let events = response.data.filter((event) => {
             let eventDate = new Date(event.beginTime);
             let eventmonth = eventDate.getUTCMonth();
             let eventDay = eventDate.getUTCDate(); //
@@ -226,7 +228,7 @@ const solarFlare = async function(month, day) {
             let solareFlareObj = {
               peakTime: peakTime,
               class: classType,
-              location: sourceLocation
+              location: sourceLocation,
             };
 
             j = yearArray.length; //short circuit the loop
@@ -238,7 +240,7 @@ const solarFlare = async function(month, day) {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         console.log("hi");
       });
@@ -249,7 +251,7 @@ const solarFlare = async function(month, day) {
   return returnVal;
 };
 
-const cme = async function(month, day) {
+const cme = async function (month, day) {
   let promises = [];
   let returnVal = {};
   for (i = 0; i < yearArray.length; i++) {
@@ -258,12 +260,12 @@ const cme = async function(month, day) {
         params: {
           startDate: `${yearArray[i]}-${month}-${day}`,
           endDate: `${yearArray[i]}-${month}-${day}`,
-          api_key: api_key
-        }
+          api_key: api_key,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data != "") {
-          let events = response.data.filter(event => {
+          let events = response.data.filter((event) => {
             let eventDate = new Date(event.startTime);
             console.log(eventDate);
             let eventmonth = eventDate.getUTCMonth();
@@ -282,7 +284,7 @@ const cme = async function(month, day) {
               longitude: longitude,
               latitude: latitude,
               speed: speed,
-              type: type
+              type: type,
             };
 
             i = yearArray.length; //short circuit the loop
@@ -293,7 +295,7 @@ const cme = async function(month, day) {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
@@ -302,7 +304,7 @@ const cme = async function(month, day) {
   return returnVal;
 };
 
-const geomagneticStorm = async function(month, day) {
+const geomagneticStorm = async function (month, day) {
   let promises = [];
   let returnVal = {};
   for (i = 0; i < yearArray.length; i++) {
@@ -311,12 +313,12 @@ const geomagneticStorm = async function(month, day) {
         params: {
           startDate: `${yearArray[i]}-${month}-${day}`,
           endDate: `${yearArray[i]}-${month}-${day}`,
-          api_key: api_key
-        }
+          api_key: api_key,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data != "") {
-          let events = response.data.filter(event => {
+          let events = response.data.filter((event) => {
             //console.log(response.data);
             let eventDate = new Date(event.startTime);
             let eventmonth = eventDate.getUTCMonth();
@@ -328,7 +330,7 @@ const geomagneticStorm = async function(month, day) {
             let KPIndex = events[0].allKpIndex[0].kpIndex;
             let gmsObejct = {
               startTime: startTime,
-              KPIndex: KPIndex
+              KPIndex: KPIndex,
             };
             i = yearArray.length; //short circuit the loop
             return gmsObejct;
@@ -337,7 +339,7 @@ const geomagneticStorm = async function(month, day) {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 

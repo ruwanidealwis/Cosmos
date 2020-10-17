@@ -1,0 +1,132 @@
+body {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  background-color: #9fa8da !important;
+  text-align: center;
+}
+h1 {
+  font-size: 4em !important;
+  font-weight: 700;
+}
+form {
+  margin: auto;
+  justify-content: center;
+}
+div {
+  font-family: "Raleway", sans-serif;
+}
+
+#date {
+  width: 30%;
+}
+
+html {
+  font-family: "Inter", sans-serif;
+  background-color: "pink";
+}
+
+#login {
+  background-color: "purple";
+}
+.footer {
+  text-align: right;
+}
+.container {
+  margin-top: 3%;
+  padding: 8%;
+  padding-top: 2%;
+  color: white;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 15%;
+
+  font-family: "Roboto";
+  text-align: center;
+  justify-content: center;
+  background-color: rgb(26, 26, 26);
+  box-shadow: 17px 17px #607d8b;
+}
+.btn {
+  background-color: #607d8b !important;
+  border: none !important;
+}
+.row {
+  padding-left: 8%;
+  padding-right: 3%;
+}
+.star {
+  background-color: white;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  position: absolute;
+  animation: glitter 10s infinite;
+}
+.animate {
+  animation: glitter 10s infinite;
+}
+.App-link {
+  color: #61dafb;
+}
+
+.App-Description {
+  color: white;
+}
+#loadingImg {
+  display: none;
+}
+strong {
+  font-weight: 700 !important;
+  color: #9fa8da;
+}
+#rocket {
+  width: 120%;
+  margin-left: 30%;
+  padding-top: 50%;
+}
+h4 {
+  font-weight: 700;
+}
+#barcodeRendering {
+  width: 70%;
+  display: none;
+  padding-bottom: 2%;
+  text-align: left;
+}
+#barcode {
+  padding-top: 5%;
+
+  padding-left: 8%;
+
+  text-align: left !important;
+}
+#explanation {
+  padding-top: 5%;
+  padding-left: 10%;
+  text-align: left;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+@keyframes glitter {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
