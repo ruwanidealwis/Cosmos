@@ -136,7 +136,7 @@ async function createMyImage(spaceData) {
 async function getColors(spaceData) {
   let barcodePalette = [];
   let palette = await Vibrant.from(
-    "https://cors-anywhere.herokuapp.com/" + spaceData.apod.url
+    "https://peaceful-everglades-36723.herokuapp.com/" + spaceData.apod.url
   ).getPalette();
 
   let paletteKeys = Object.keys(palette);
@@ -146,7 +146,7 @@ async function getColors(spaceData) {
   }
 
   let Hubblepalette = await Vibrant.from(
-    "https://cors-anywhere.herokuapp.com/" + spaceData.hubble
+    "https://peaceful-everglades-36723.herokuapp.com/" + spaceData.hubble
   ).getPalette();
 
   let HubblepaletteKeys = Object.keys(Hubblepalette);
