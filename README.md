@@ -1,6 +1,6 @@
 # Space Barcode
 
-Generates a personalized barcode based on events that occured in space on the day of the user's choice.
+Generates a personalized barcode based on events that occurred in space on the day of the user's choice.
 
 ## Motvation
 I had always been fascinated by Space and wanted to learn more about it while also create a fun, lightweight app that can easily be used.
