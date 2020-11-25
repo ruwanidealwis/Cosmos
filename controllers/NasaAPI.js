@@ -25,26 +25,41 @@ function randomInteger(min, max) {
 //getting the astronomy picture of the day
 
 const apod = async function (month, day) {
-  let year = randomInteger(2012, lastCompletedYear); //image quality much better
+  let year = randomInteger(2012, lastCompletedYear - 1); //image quality much better
+
   //console.log(year);
-  return axios
-    .get(`https://api.nasa.gov/planetary/apod?`, {
-      params: {
-        api_key: api_key,
-        date: `${year}-${month}-${day}`,
-      },
-    })
-    .then((response) => {
-      let apodInfo = {
-        url: response.data.url,
-        date: response.data.date,
-        explanation: response.data.explanation,
-      };
-      return apodInfo;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  let returnVal = {};
+  while (true) {
+    returnVal = await axios
+      .get(`https://api.nasa.gov/planetary/apod?`, {
+        params: {
+          api_key: api_key,
+          date: `${year}-${month}-${day}`,
+        },
+      })
+      .then((response) => {
+        let apodInfo = {
+          url: response.data.url,
+          date: response.data.date,
+          explanation: response.data.explanation,
+        };
+
+        return apodInfo;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(returnVal);
+    //if the link is not a youtube video link
+    if (!returnVal.url.includes("www.youtube.com/embed")) {
+      break;
+    } else {
+      //the year has youtube link, select another random year
+      year = randomInteger(2012, lastCompletedYear - 1); //image quality much better
+    }
+  }
+  return returnVal;
 };
 
 //get Mars Rover for specific date

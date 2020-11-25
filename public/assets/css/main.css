@@ -39,7 +39,7 @@ html {
   margin-left: 15%;
   margin-right: 15%;
   margin-bottom: 15%;
-
+  min-height: 50vh;
   font-family: "Roboto";
   text-align: center;
   justify-content: center;

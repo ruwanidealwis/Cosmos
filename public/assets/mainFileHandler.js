@@ -1,6 +1,5 @@
-let trimCanvas = require("trim-canvas");
 window.onload = () => {
-  console.log(trimCanvas);
+  //console.logtrimCanvas);
   /*for (let i = 0; i < 200; i++) {
     let star = document.createElement("div");
     star.className = "star";
@@ -21,7 +20,7 @@ window.onload = () => {
         $("#loadingImg").hide();
       },
       success: function (data) {
-        console.log(data);
+        //console.logdata);
         createMyImage(data);
       },
     });
@@ -29,8 +28,8 @@ window.onload = () => {
 };
 async function createMyImage(spaceData) {
   let date = new Date(spaceData.date);
-  console.log(date);
-  console.log(spaceData);
+  //console.logdate);
+  //console.logspaceData);
   let img = document.createElement("img");
 
   img.setAttribute("id", "svg");
@@ -96,7 +95,7 @@ async function createMyImage(spaceData) {
       `<strong>Band ${spaceData.asteroids.count}:</strong> Thicker and shorter than the rest because on this day ${spaceData.asteroids.count} asteroids were closest to earth on their path.<br>`;
 
   explanation = explanation + "<br>" + textExplanation;
-  //console.log(trimCanvas);
+  ////console.logtrimCanvas);
   //canvas = trimCanvas(canvas);
   let barcode = document.getElementById("barcode");
   barcode.setAttribute("class", "align-middle");
@@ -141,7 +140,6 @@ async function getColors(spaceData) {
 
   let paletteKeys = Object.keys(palette);
   for (const key of paletteKeys) {
-    console.log("hi");
     barcodePalette.push(palette[key].hex);
   }
 
@@ -151,12 +149,10 @@ async function getColors(spaceData) {
 
   let HubblepaletteKeys = Object.keys(Hubblepalette);
   for (const key of HubblepaletteKeys) {
-    console.log("hi");
     barcodePalette.push(Hubblepalette[key].hex);
   }
 
   if (spaceData.solarFlare) {
-    console.log("hi");
     barcodePalette.push("#930000", "#fe8d0e", "#fe4b01", "#d80000", "#fedca2");
   }
 
@@ -165,7 +161,6 @@ async function getColors(spaceData) {
     let greenArray = randomColor({ hue: "green", count: 5 });
 
     for (const color of greenArray) {
-      console.log(color);
       barcodePalette.push(color);
     }
   }
@@ -175,151 +170,15 @@ async function getColors(spaceData) {
   return barcodePalette;
 }
 
-function drawBuildings(spaceData, canvas, randomSkyColor) {
-  for (let i = 0; i < spaceData.asteroids.count; i++) {
-    height = Math.random() * (Math.random() * 500) + 200;
-
-    if (height > canvas.height) {
-      console.log(height);
-      height = height - (canvas.height - height) * 10;
-    }
-    console.log(height);
-    width = Math.random() * 80 + 22;
-    left = startWidth;
-
-    if (left < 0) {
-      left = 0;
-    }
-    if (left > canvas.width) {
-      left = canvas.width - left - (Math.random() - 9);
-    }
-    console.log(width);
-    var rect = new fabric.Rect({
-      left: left,
-      top: canvas.height - height,
-      fill: "#242925",
-      width: width,
-      height: height,
-    });
-
-    /*rect.set(
-      "shadow",
-      new fabric.Shadow({
-        lcolor: randomColor({
-          luminosity: "dark",
-          hue: randomSkyColor,
-        }),
-        blur: 8,
-        offsetX: -2,
-        offsetY: -2,
-      })
-    );*/
-
-    canvas.add(rect);
-
-    startWidth = startWidth + width;
-  }
-  startWidth = 0;
-  for (let i = 0; i < spaceData.asteroids.count; i++) {
-    height = Math.random() * (Math.random() * 500) + 250;
-
-    if (height > canvas.height) {
-      console.log(height);
-      height = height - (canvas.height - height) * 10;
-    }
-    console.log(height);
-    width = Math.random() * 80 + 22;
-    left = startWidth;
-
-    if (left < 0) {
-      left = 0;
-    }
-    if (left > canvas.width) {
-      left = canvas.width - left - (Math.random() - 9);
-    }
-    console.log(width);
-    var rect = new fabric.Rect({
-      left: left,
-      top: canvas.height - height,
-      fill: randomColor({
-        luminosity: "dark",
-        hue: randomSkyColor,
-      }),
-      width: width,
-      height: height,
-    });
-
-    /*rect.set(
-      "shadow",
-      new fabric.Shadow({
-        lcolor: randomColor({
-          luminosity: "dark",
-          hue: randomSkyColor,
-        }),
-        blur: 8,
-        offsetX: -2,
-        offsetY: -2,
-      })
-    );*/
-
-    canvas.add(rect);
-
-    for (let i = 10; i < height - 10; i++) {
-      console.log("hi");
-      let light = new fabric.Rect({
-        left: startWidth + 10,
-        top: canvas.height - i,
-        fill: randomColor({
-          hue: "cfc847",
-          luminosity: "light",
-        }),
-        width: width - 20,
-        height: 6,
-      });
-      canvas.add(light);
-      i = i + 20;
-    }
-
-    startWidth = startWidth + width;
-  }
-}
-
-function drawLights(canvas) {
-  console.log("added path");
-  startWidth = 0;
-
-  var path = new fabric.Path(
-    "M1 273.746C6.64223 266.787 3.45718 255.399 6.11111 247.08C13.0649 225.282 37.3977 211.953 57 203.524C81.9527 192.794 104.891 188.741 129.667 201.024C153.765 212.971 177.364 227.426 203.778 233.802C206.647 234.494 212.29 235.683 215.667 235.857C218.462 236.002 219.285 232.727 221.444 231.191C227.317 227.012 241.607 219.324 246.333 216.635C267.488 204.6 288.423 192.234 309.111 179.413C322.952 170.835 333.366 164.111 343.222 151.302C360.904 128.323 376.848 102.689 408.333 98.7462C436.617 95.204 465.722 111.885 490.556 122.913C499.919 127.071 509.17 131.487 518.611 135.468C524.871 138.108 527.09 139.128 533 136.302C556.942 124.851 580.95 112.358 602.167 96.3018C612.581 88.4203 620.594 79.312 628.444 68.9684C635.347 59.8746 641.494 49.4367 650.944 42.6351C664.279 33.0381 684.395 38.0619 699.111 40.9684C713.078 43.7269 731.437 53.5806 745.778 49.8018C751.806 48.2132 762.767 42.098 767.444 39.6351C780.766 32.6208 793.934 25.5331 805.889 16.3018C811.679 11.8305 816.878 5.17039 823.111 1.30175C826.363 -0.716947 819.245 7.9256 817.667 11.4129C810.194 27.9197 816.246 46.142 817.111 63.3573C817.423 69.5704 820.094 84.0831 813.444 88.3018C787.113 105.007 751.736 104.852 721.833 104.413C703.978 104.151 684.818 101.695 667.333 106.968C653.309 111.198 642.819 121.365 632.722 131.357C627.971 136.059 618.653 146.013 613.333 150.746C604.386 158.706 595.687 160.164 583.889 161.746C573.491 163.141 552.024 165.187 541.889 165.413C522.392 165.847 504.028 162.37 484.889 159.413C454.289 154.685 416.587 147.81 388.222 164.413C373.776 172.868 365.96 186.645 357.889 200.413C354.752 205.763 352.068 211.378 348.778 216.635C340.345 230.11 331.588 233.452 316.278 238.08C301.548 242.531 265.922 251.699 252.667 254.635C228.485 259.992 201.944 267.5 178.111 256.524C159.966 248.167 174.93 249.878 154 244.302C135.459 239.362 113.197 237.728 94.1111 238.746C65.1948 240.289 41.1435 258.862 27.3333 283.913C25.6801 286.912 24.4397 296.491 18.8889 293.08C12.5861 289.205 10.7538 281.559 7.11111 275.691C5.82341 273.616 2.96181 267.746 1 267.746",
-    {
-      stroke: "#42de61",
-      fill: "#42de61",
-      angle: 20,
-    }
-  );
-
-  path.set({ left: 0, top: -30 });
-  canvas.add(path);
-
-  var path2 = new fabric.Path(
-    "M1 273.746C6.64223 266.787 3.45718 255.399 6.11111 247.08C13.0649 225.282 37.3977 211.953 57 203.524C81.9527 192.794 104.891 188.741 129.667 201.024C153.765 212.971 177.364 227.426 203.778 233.802C206.647 234.494 212.29 235.683 215.667 235.857C218.462 236.002 219.285 232.727 221.444 231.191C227.317 227.012 241.607 219.324 246.333 216.635C267.488 204.6 288.423 192.234 309.111 179.413C322.952 170.835 333.366 164.111 343.222 151.302C360.904 128.323 376.848 102.689 408.333 98.7462C436.617 95.204 465.722 111.885 490.556 122.913C499.919 127.071 509.17 131.487 518.611 135.468C524.871 138.108 527.09 139.128 533 136.302C556.942 124.851 580.95 112.358 602.167 96.3018C612.581 88.4203 620.594 79.312 628.444 68.9684C635.347 59.8746 641.494 49.4367 650.944 42.6351C664.279 33.0381 684.395 38.0619 699.111 40.9684C713.078 43.7269 731.437 53.5806 745.778 49.8018C751.806 48.2132 762.767 42.098 767.444 39.6351C780.766 32.6208 793.934 25.5331 805.889 16.3018C811.679 11.8305 816.878 5.17039 823.111 1.30175C826.363 -0.716947 819.245 7.9256 817.667 11.4129C810.194 27.9197 816.246 46.142 817.111 63.3573C817.423 69.5704 820.094 84.0831 813.444 88.3018C787.113 105.007 751.736 104.852 721.833 104.413C703.978 104.151 684.818 101.695 667.333 106.968C653.309 111.198 642.819 121.365 632.722 131.357C627.971 136.059 618.653 146.013 613.333 150.746C604.386 158.706 595.687 160.164 583.889 161.746C573.491 163.141 552.024 165.187 541.889 165.413C522.392 165.847 504.028 162.37 484.889 159.413C454.289 154.685 416.587 147.81 388.222 164.413C373.776 172.868 365.96 186.645 357.889 200.413C354.752 205.763 352.068 211.378 348.778 216.635C340.345 230.11 331.588 233.452 316.278 238.08C301.548 242.531 265.922 251.699 252.667 254.635C228.485 259.992 201.944 267.5 178.111 256.524C159.966 248.167 174.93 249.878 154 244.302C135.459 239.362 113.197 237.728 94.1111 238.746C65.1948 240.289 41.1435 258.862 27.3333 283.913C25.6801 286.912 24.4397 296.491 18.8889 293.08C12.5861 289.205 10.7538 281.559 7.11111 275.691C5.82341 273.616 2.96181 267.746 1 267.746",
-    {
-      stroke: "#42de61",
-      fill: "#42de61",
-    }
-  );
-  path2.set({ left: 200, top: -100 });
-  canvas.add(path2);
-}
-
 function drawBarcode(barcodePalette, spaceData, ctx) {
   let index = 0;
   let asteroidDrawn = 0;
   let interval = 10 - Math.floor(Math.random() * 10);
-  console.log(interval);
+  //console.loginterval);
 
   for (const [count, color] of barcodePalette.entries()) {
-    console.log(count);
-    console.log(color);
+    //console.logcount);
+    //console.logcolor);
     height = 380;
     if (
       count === 0 ||
@@ -327,11 +186,11 @@ function drawBarcode(barcodePalette, spaceData, ctx) {
       count === barcodePalette.length - 1 ||
       count === barcodePalette.length - 2
     ) {
-      console.log("hi");
+      //console.log"hi");
       height = 420;
     }
     if (count + 1 === spaceData.asteroids.count) {
-      console.log("");
+      //console.log"");
       ctx.lineWidth = 25;
       asteroidDrawn = asteroidDrawn + 1;
       height = 360;
@@ -343,12 +202,12 @@ function drawBarcode(barcodePalette, spaceData, ctx) {
     }
 
     if (spaceData.geomagneticStorm && count >= barcodePalette.length - 5) {
-      console.log("storm....");
-      console.log(spaceData.geomagneticStorm.KPIndex);
+      //console.log"storm....");
+      //console.logspaceData.geomagneticStorm.KPIndex);
       ctx.lineWidth = (spaceData.geomagneticStorm.KPIndex / 3) * 10;
-      console.log(ctx.lineWidth);
+      //console.logctx.lineWidth);
     }
-    console.log(height);
+    //console.logheight);
     ctx.beginPath();
     ctx.moveTo(5 + index, 0);
     ctx.lineTo(5 + index, height);
