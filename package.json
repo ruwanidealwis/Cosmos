@@ -20,7 +20,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.1",
     "geo-tz": "^6.0.0",
     "jquery.redirect": "^1.1.4",
